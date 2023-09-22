@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data_conllection.mapper.EquipmentCollectionGroupMapper">
+
+    <resultMap id="EquipmentCollectionGroupVo" type="EquipmentCollectionGroupVo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <collection property="groupPoList" ofType="EquipmentCollectionGroupPo">
+            <id column="id2" property="id"/>
+            <result column="name2" property="name"/>
+            <result column="ip" property="ip"/>
+            <result column="port" property="port"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryTreeList" resultMap="EquipmentCollectionGroupVo">
+        select
+            te.id,
+            te.code,
+            te.name,
+            tecg.id 'id2',
+            tecg.name 'name2',
+            tecg.ip,
+            tecg.port
+        from t_equipment te
+        left join t_equipment_collection_group tecg on tecg.equipment_id = te.id
+    </select>
+
+</mapper>
